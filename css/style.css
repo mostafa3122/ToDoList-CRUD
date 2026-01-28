@@ -1,40 +1,190 @@
 body {
-    font-family: Arial, sans-serif;
-    background: #f4f4f4;
-  }
-  
-  .container {
-    width: 400px;
-    margin: 50px auto;
-    background: #fff;
-    padding: 20px;
-    border-radius: 8px;
-  }
-  
-  .input-box {
-    display: flex;
-    gap: 10px;
-  }
-  
-  input {
-    flex: 1;
-    padding: 8px;
-  }
-  
-  button {
-    padding: 8px 12px;
-    cursor: pointer;
-  }
-  
-  li {
-    list-style: none;
-    margin-top: 10px;
-    display: flex;
-    justify-content: space-between;
-  }
-  
-  .done {
-    text-decoration: line-through;
-    color: gray;
-  }
-  
+    background-color: #0D0714;
+    font-family: "Akaya Kanadaka";
+    overflow: hidden;
+}
+
+
+.background {
+    width: 100vw;
+    height: 100vh;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    overflow: hidden;
+}
+
+.background span {
+    width: 20vmin;
+    height: 20vmin;
+    border-radius: 50%;
+    backface-visibility: hidden;
+    position: absolute;
+    animation-name: move;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+}
+
+/* Particle 1 */
+.background span:nth-child(1) {
+    /* background-color: #583C87; */
+    top: 10%;
+    left: 15%;
+    animation-duration: 16s;
+    animation-delay: -4s;
+    transform-origin: -10vw 5vh;
+    box-shadow: -40vmin 0 10vmin #583C87;
+}
+
+/* Particle 2 */
+.background span:nth-child(2) {
+
+    top: 30%;
+    left: 50%;
+    animation-duration: 12s;
+    animation-delay: -2s;
+    transform-origin: 15vw -10vh;
+    box-shadow: 40vmin 0 8vmin #E45A84;
+}
+
+/* Particle 3 */
+.background span:nth-child(3) {
+
+    top: 70%;
+    left: 25%;
+    animation-duration: 18s;
+    animation-delay: -6s;
+    transform-origin: -5vw 10vh;
+    box-shadow: -35vmin 0 9vmin #FFACAC;
+}
+
+/* Particle 4 */
+.background span:nth-child(4) {
+
+    top: 50%;
+    left: 70%;
+    animation-duration: 20s;
+    animation-delay: -3s;
+    transform-origin: 20vw -15vh;
+    box-shadow: 45vmin 0 11vmin #583C87;
+}
+
+/* Particle 5 */
+.background span:nth-child(5) {
+
+    top: 80%;
+    left: 80%;
+    animation-duration: 14s;
+    animation-delay: -5s;
+    transform-origin: -15vw 20vh;
+    box-shadow: -50vmin 0 10vmin #E45A84;
+}
+
+@keyframes move {
+    0% {
+        transform: translate3d(0, 0, 0) rotate(0deg);
+    }
+
+    100% {
+        transform: translate3d(0, 0, 1px) rotate(360deg);
+    }
+}
+
+
+nav {
+    background-color: #211232;
+
+    a.navbar-brand span {
+        font-size: 30px;
+        color: #9E78CF;
+        /* font-family: "Akaya Kanadaka"; */
+    }
+
+}
+
+.navbar-toggler-icon {
+    background-image: none
+}
+
+nav img {
+    width: 50px;
+}
+
+#userInputTask {
+    background-color: transparent;
+    border-color: #3E1671;
+    color: #fff;
+
+    &::placeholder {
+        color: #9E78CF;
+    }
+}
+
+.btn {
+    background-color: #9E78CF;
+    color: #fff;
+
+    &:hover {
+        background-color: #15101C;
+        color: #fff;
+
+    }
+
+}
+
+.btn.clear-all {
+    background-color: rgb(177, 56, 56);
+}
+
+.task {
+    background-color: #15101C;
+    transition: all 0.4s ease;
+    overflow: hidden;
+    color: #9E78CF;
+
+    .check:hover {
+        background-color: rgb(40, 138, 77);
+    }
+
+    .delete:hover {
+        background-color: rgb(177, 56, 56);
+    }
+
+    .edit:hover {
+        background-color: rgb(163, 154, 154);
+    }
+}
+
+.task.removing {
+    opacity: 0;
+    transform: translateY(-20px);
+    max-height: 0;
+    margin: 0 !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    transition: all 0.4s ease;
+}
+
+
+
+.col-lg-7.adding {
+    animation: taskAppear 0.4s ease forwards;
+}
+
+@keyframes taskAppear {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+#errorMsg {
+    font-size: 14px;
+}
