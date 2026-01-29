@@ -49,6 +49,22 @@
         </div>
     </nav>
     <!-- End Navbar -->
+    <!-- Start edit  -->
+    <div id="editOverlay" class="edit-overlay d-none">
+        <div class="edit-container">
+            <h3>Edit Task</h3>
+            <button id="closeEdit" class="close-btn" onclick="closeModal()">&times;</button>
+            <input type="text" id="editTaskInput" placeholder="Edit your task...">
+            <div class="alert alert-danger d-none" role="alert" id="alertedit">
+            Task should not be empty
+            </div>
+            <div class="edit-buttons">
+                <button id="cancelEdit" class="btn-secondary" onclick="closeModal()">Cancel</button>
+                <button id="saveEdit" class="btn-primary" onclick="saveEdit()">Save Changes</button>
+            </div>
+        </div>
+    </div>
+    <!-- End edit -->
     <!-- content of to do list app -->
     <section class=" home mt-5 " id="home">
         <div class="container">
@@ -71,12 +87,23 @@
                 </div>
             </div>
             <!-- End user input -->
+            <!-- select option -->
+            <div class="row justify-content-center mb-3">
+                <div class="col-lg-7">
+                    <select class="form-select text-dark" id="formSelect" onchange="filterTasks(this.value)">
+                        <option value="all">All Tasks</option>
+                        <option value="todo">To Do</option>
+                        <option value="finished">Finished</option>
+                    </select>
+                </div>
+            </div>
+
             <!-- Start to do tasks -->
             <div class="todo-tasks my-5 ">
                 <div class="row justify-content-center">
                     <div class="col-lg-7">
                         <p class="text-light">
-                            Tasks To Do :
+                             To Do Tasks :
                             <span id="taskCount"></span>
                         </p>
                     </div>

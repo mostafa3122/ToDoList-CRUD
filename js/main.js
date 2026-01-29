@@ -14,9 +14,11 @@ const userInputTask = document.getElementById("userInputTask");
 const tasksBox = document.getElementById("tasks");
 const finishedTasksBox = document.getElementById("finishedTasks");
 const errorMsg = document.getElementById("errorMsg");
-
+const editOverlay = document.getElementById("editOverlay");
+const editTaskInput = document.getElementById("editTaskInput");
 let tasks;
 let finishedTasks;
+let currentEditIndex;
 // check there are is any  Tasks in local storage or not
 if (localStorage.getItem("tasks") == null) {
   tasks = [];
@@ -38,7 +40,7 @@ if (localStorage.getItem("finishedTasks") == null) {
 function addTask() {
   // check if user enter task or not
   if (userInputTask.value.trim() === "") {
-    swal.fire({
+    Swal.fire({
       icon: "error",
       title: "Oops...",
       text: "You Must Write Any Task",
@@ -50,7 +52,7 @@ function addTask() {
   errorMsg.classList.add("d-none");
   tasks.push(userInputTask.value);
   localStorage.setItem("tasks", JSON.stringify(tasks));
-  swal.fire({
+  Swal.fire({
     icon: "success",
     title: "Good Work",
     text: "Your Task Added Successfuly",
@@ -63,18 +65,19 @@ function addTask() {
 function displayTasks(array, newIndex = -1) {
   let toDoTasks = "";
   for (let i = 0; i < array.length; i++) {
+    const realIndex = tasks.indexOf(array[i]);
     toDoTasks += `
     <div class="col-lg-7 ${i === newIndex ? "adding" : ""}">
     <div class="task d-flex justify-content-between p-2 rounded-2">
         <p class=" m-0 d-flex align-items-center "> ${array[i]}</p>
         <div class="icons ">
-            <button class="btn edit">
+            <button onclick="editTask(${realIndex})" class="btn edit">
                 <i class="fa-solid fa-edit"></i>
             </button>
-            <button onclick="checkTask(${i})" class="btn check">
+            <button onclick="checkTask(${realIndex})" class="btn check">
                 <i class="fa-solid fa-check "></i>
             </button>
-            <button onclick="deleteTask(this,${i})" class="btn delete">
+            <button onclick="deleteTask(${realIndex})" class="btn delete">
                 <i class="fa-solid fa-trash"></i>
             </button>
         </div>
@@ -90,6 +93,7 @@ function displayFinishedTasks(array, newIndex = -1) {
   let finishedToDoTasks = "";
 
   for (let i = 0; i < array.length; i++) {
+    const realIndex = tasks.indexOf(array[i]);
     finishedToDoTasks += `
     <div class="col-lg-7 ${i === newIndex ? "adding" : ""}">
       <div class="task d-flex justify-content-between p-2 rounded-2">
@@ -97,10 +101,10 @@ function displayFinishedTasks(array, newIndex = -1) {
             array[i]
           }</p>
           <div class="icons">
-              <button class="btn">
+              <button onclick="redoTask(${realIndex})" class="btn">
                   <i class="fa-solid fa-redo"></i>
               </button>
-              <button onclick="deleteFinishedTask(this, ${i})" class="btn delete">
+              <button onclick="deleteFinishedTask( ${realIndex})" class="btn delete">
                   <i class="fa-solid fa-trash"></i>
               </button>
           </div>
@@ -121,11 +125,10 @@ function checkTask(index) {
   localStorage.setItem("finishedTasks", JSON.stringify(finishedTasks));
 
   displayTasks(tasks);
-  displayFinishedTasks(finishedTasks, finishedTasks.length - 1); // 👈 animate this one
+  displayFinishedTasks(finishedTasks, finishedTasks.length - 1);
 }
 
 // Delete Task from tasks using sweet alert
-
 function deleteTask(index) {
   Swal.fire({
     title: "Are you sure?",
@@ -151,7 +154,6 @@ function deleteTask(index) {
 }
 
 // Delete Task from finished tasks using sweet alert
-
 function deleteFinishedTask(index) {
   Swal.fire({
     title: "Are you sure?",
@@ -207,23 +209,69 @@ function clearAll() {
 // search for task
 function searchTask(searchValue) {
   const search = searchValue.toLowerCase();
-  const todoRusult = tasks.filter((task) =>
+  const todoResult = tasks.filter((task) =>
     task.toLowerCase().includes(search)
   );
-  const finishedRusult = finishedTasks.filter((task) =>
+  const finishedResult = finishedTasks.filter((task) =>
     task.toLowerCase().includes(search)
   );
   // search for to do tasks
-  if (todoRusult.length === 0) {
+  if (todoResult.length === 0) {
     tasksBox.innerHTML = `<h2 class="text-danger text-center">No Tasks Found</h2>`;
   } else {
-    displayTasks(todoRusult);
+    displayTasks(todoResult);
   }
   // search for finished tasks
 
-  if (finishedRusult.length === 0) {
+  if (finishedResult.length === 0) {
     finishedTasksBox.innerHTML = `<h2 class="text-danger text-center">No finished Tasks Found</h2>`;
   } else {
-    displayFinishedTasks(finishedRusult);
+    displayFinishedTasks(finishedResult);
   }
+}
+// filter tasks
+function filterTasks(type) {
+  if (type === "all") {
+    displayTasks(tasks);
+    displayFinishedTasks(finishedTasks);
+  } else if (type === "todo") {
+    displayTasks(tasks);
+    finishedTasksBox.innerHTML = ""; // hide finished
+  } else if (type === "finished") {
+    tasksBox.innerHTML = ""; // hide todo
+    displayFinishedTasks(finishedTasks);
+  }
+}
+// redo finished task
+function redoTask(index) {
+  tasks.push(finishedTasks[index]);
+  finishedTasks.splice(index, 1);
+  localStorage.setItem("tasks", JSON.stringify(tasks));
+  localStorage.setItem("finishedTasks", JSON.stringify(finishedTasks));
+  displayTasks(tasks);
+  displayFinishedTasks(finishedTasks);
+}
+
+// update task and  open modal
+function editTask(index) {
+  currentEditIndex = index;
+  editOverlay.classList.remove("d-none");
+  editTaskInput.value = tasks[index];
+}
+// save update
+function saveEdit() {
+  if (editTaskInput.value == "") {
+    document.getElementById("alertedit").classList.remove("d-none");
+  } else {
+    tasks.splice(currentEditIndex, 1, editTaskInput.value);
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+    editTaskInput.value = "";
+    closeModal();
+    displayTasks(tasks);
+  }
+}
+// close modal
+function closeModal() {
+  editOverlay.classList.add("d-none");
+  document.getElementById("alertedit").classList.add("d-none");
 }

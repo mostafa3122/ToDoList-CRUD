@@ -1,10 +1,10 @@
 body {
     background-color: #0D0714;
     font-family: "Akaya Kanadaka";
-    overflow: hidden;
+  
 }
 
-
+  
 .background {
     width: 100vw;
     height: 100vh;
@@ -112,11 +112,18 @@ nav img {
     width: 50px;
 }
 
-#userInputTask {
+#userInputTask, #formSelect,.form-select {
     background-color: transparent;
     border-color: #3E1671;
     color: #fff;
 
+    &::placeholder {
+        color: #9E78CF;
+    }
+}
+
+.form-select{
+    color: #0D0714;
     &::placeholder {
         color: #9E78CF;
     }
@@ -188,3 +195,85 @@ nav img {
 #errorMsg {
     font-size: 14px;
 }
+
+
+
+.edit-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+}
+
+.edit-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #15101C;
+    padding: 2rem;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 400px;
+    color: #9E78CF;
+}
+.edit-container h3 {
+    margin: 0 0 1.5rem 0;
+    color: #9E78CF;
+}
+.close-btn {
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: #9E78CF;
+    cursor: pointer;
+}
+#editTaskInput {
+    width: 100%;
+    padding: 0.75rem;
+    margin-bottom: 1.5rem;
+    background-color: transparent;
+    border: 1px solid #9E78CF;
+    border-radius: 5px;
+    color: #9E78CF;
+}
+#editTaskInput:focus {
+    outline: none;
+    border-color: #3E1671;
+}
+.edit-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-end;
+}
+.btn-secondary {
+    background-color: #6c757d;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+.btn-primary {
+    background-color: #9E78CF;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+.btn-secondary:hover {
+    background-color: #5a6268;
+}
+.btn-primary:hover {
+    background-color: #3E1671;
+}
+
