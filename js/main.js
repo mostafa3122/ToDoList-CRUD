@@ -101,7 +101,7 @@ function displayFinishedTasks(array, newIndex = -1) {
             array[i]
           }</p>
           <div class="icons">
-              <button onclick="redoTask(${realIndex})" class="btn">
+              <button onclick="redoTask(${i})" class="btn">
                   <i class="fa-solid fa-redo"></i>
               </button>
               <button onclick="deleteFinishedTask( ${realIndex})" class="btn delete">
@@ -275,3 +275,4 @@ function closeModal() {
   editOverlay.classList.add("d-none");
   document.getElementById("alertedit").classList.add("d-none");
 }
+
