@@ -180,8 +180,6 @@ nav img {
     transition: all 0.4s ease;
 }
 
-
-
 .col-lg-7.adding {
     animation: taskAppear 0.4s ease forwards;
 }
@@ -201,8 +199,6 @@ nav img {
 #errorMsg {
     font-size: 14px;
 }
-
-
 
 .edit-overlay {
     position: fixed;
