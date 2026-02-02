@@ -148,6 +148,7 @@ function deleteTask(index) {
         title: "Deleted!",
         text: "Your task has been deleted.",
         icon: "success",
+        theme: "dark",
       });
     }
   });
@@ -162,6 +163,7 @@ function deleteFinishedTask(index) {
     showCancelButton: true,
     confirmButtonColor: "#9E78CF",
     cancelButtonColor: "#d33",
+    theme: "dark",
     confirmButtonText: "Yes, delete it!",
   }).then((result) => {
     if (result.isConfirmed) {
@@ -173,6 +175,7 @@ function deleteFinishedTask(index) {
         title: "Deleted!",
         text: "Your task has been deleted.",
         icon: "success",
+        theme: "dark",
       });
     }
   });
@@ -182,12 +185,12 @@ function deleteFinishedTask(index) {
 function clearAll() {
   Swal.fire({
     title: "Are you sure?",
-
     text: "You won't be able to revert this! ",
     icon: "warning",
     showCancelButton: true,
     confirmButtonColor: "#9E78CF",
     cancelButtonColor: "#d33",
+    theme: "dark",
     confirmButtonText: "Yes, delete it!",
   }).then((result) => {
     if (result.isConfirmed) {
@@ -201,6 +204,7 @@ function clearAll() {
         title: "Deleted!",
         text: "Your task has been deleted.",
         icon: "success",
+        theme: "dark",
       });
     }
   });
@@ -275,4 +279,3 @@ function closeModal() {
   editOverlay.classList.add("d-none");
   document.getElementById("alertedit").classList.add("d-none");
 }
-
